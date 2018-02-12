@@ -1,7 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Grumpydev.Net.Essentials.Web;
-using Microsoft.AspNetCore.Server.Kestrel;
-
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 [TestClass]
 public class KestrelExtensionsTests

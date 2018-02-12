@@ -14,6 +14,8 @@ namespace Grumpydev.Net.Essentials.Web
 {
     public static class KestrelServerOptionsExtensions
     {
-        
+        public static void ConfigureEndpoints(this KestrelServerOptions options)
+        {
+        }
     }   
 }

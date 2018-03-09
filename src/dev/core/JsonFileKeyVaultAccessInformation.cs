@@ -7,24 +7,21 @@ namespace Grumpydev.Net.Essentials.Core
 {
     public class JsonFileKeyVaultAccessInformation : IKeyVaultAccessInformation
     {
-        private IConfiguration Configuration;
         private IFileSystem FileSystem;
-        private bool _isInformationLoaded;
+
         private InternalKeyVaultAccessInformation KeyVaultAccessInformation;
 
 
-        public JsonFileKeyVaultAccessInformation(IConfiguration configuration, IFileSystem fileSystem)
+        public JsonFileKeyVaultAccessInformation(IFileSystem fileSystem)
         {
-            configuration.ThrowIfNull("The configuration should not be null.");
             fileSystem.ThrowIfNull("You must provide a local file system.");
-
-            this.Configuration = configuration;
             this.FileSystem = fileSystem;
         }
 
         private InternalKeyVaultAccessInformation LoadInformation()
         {
-            var fileName = Configuration.GetSection("appSettings")["SecretFileName"] ?? ".KeyVaultAccessInformation.json";
+            var fileName =  ".KeyVaultAccessInformation.json"; //TODO: override with configuration?
+
             var stringConfiguration = System.IO.File.ReadAllText(fileName);
             this.KeyVaultAccessInformation = JsonConvert.DeserializeObject<InternalKeyVaultAccessInformation>(stringConfiguration);
             return this.KeyVaultAccessInformation;
@@ -33,7 +30,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
-                return this.KeyVaultAccessInformation.PrincipalApplicationId ?? this.LoadInformation().PrincipalApplicationId;
+                return this.KeyVaultAccessInformation?.PrincipalApplicationId ?? this.LoadInformation().PrincipalApplicationId;
             }
         }
 
@@ -41,7 +38,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
-                return this.KeyVaultAccessInformation.LocalCertificateFile ?? this.LoadInformation().LocalCertificateFile;
+                return this.KeyVaultAccessInformation?.LocalCertificateFile ?? this.LoadInformation().LocalCertificateFile;
             }
         }
 
@@ -49,7 +46,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
-                return this.KeyVaultAccessInformation.LocalCertificatePassword ?? this.LoadInformation().LocalCertificatePassword;
+                return this.KeyVaultAccessInformation?.LocalCertificatePassword ?? this.LoadInformation().LocalCertificatePassword;
             }
         }
 

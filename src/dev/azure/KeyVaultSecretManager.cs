@@ -11,9 +11,7 @@ namespace Grumpydev.Net.Essentials.Azure
 {
     public class KeyVaultSecretManager : ICertificateProvider
     {
-        
-        public IConfiguration Configuration { get; set; }
-
+        public IKeyVaultAccessInformation KeyVaultAccessInformation { get; set; }
         public ICertificateForKeyVaultAuthentication CertificateForKeyVaultAuthentication { get; set; }
 
         internal KeyVaultClient KeyVaultClient
@@ -31,11 +29,8 @@ namespace Grumpydev.Net.Essentials.Azure
         internal KeyVaultClient GetKeyVaultClient()
         {
             var certificate = this.CertificateForKeyVaultAuthentication.GetCertificateForAuthentication();
-
-            var applicationId = this.Configuration.GetSection("appSettings")[ConfigurationKeys.AzureKeyVaultApplicationId];
-
-            applicationId.ThrowIfNull($"Missing key in the configuration. The configuration should include a key '{ConfigurationKeys.AzureKeyVaultApplicationId}' containing the AAD application ID to authenticate with. See.."); //TODO: Provide link with help.
-
+            var applicationId = this.KeyVaultAccessInformation.PrincipalApplicationId;
+           
             var client = GetKeyVaultClient(certificate, applicationId);
 
             return client;
@@ -43,13 +38,14 @@ namespace Grumpydev.Net.Essentials.Azure
 
         private KeyVaultClient _keyVaultClient;
 
-        public KeyVaultSecretManager(IConfiguration configuration, ICertificateForKeyVaultAuthentication certificateForKeyVaultAuthentication)
+        public KeyVaultSecretManager(IKeyVaultAccessInformation keyVaultAccessInformation, ICertificateForKeyVaultAuthentication certificateForKeyVaultAuthentication)
         {
-            configuration.ThrowIfNull();
+            keyVaultAccessInformation.ThrowIfNull();
             certificateForKeyVaultAuthentication.ThrowIfNull();
 
-            this.Configuration = configuration;
             this.CertificateForKeyVaultAuthentication = certificateForKeyVaultAuthentication;
+            this.KeyVaultAccessInformation = keyVaultAccessInformation;
+
         }
 
         public X509Certificate2 GetCertificate(string certificateName)
@@ -77,11 +73,6 @@ namespace Grumpydev.Net.Essentials.Azure
             ), httpClient);
 
             return keyVaultClient;
-        }
-
-        public class ConfigurationKeys
-        {
-            public const string AzureKeyVaultApplicationId = "AzureKeyVaultApplicationId";
         }
     }
 }

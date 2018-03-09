@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\dev\azure\azure.csproj" />
+    <ProjectReference Include="..\..\..\dev\core\core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update=".KeyVaultAccessInformation.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

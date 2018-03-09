@@ -287,3 +287,12 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+
+# Project specific rules:
+
+# Ignoring files beginning in dot, like in Linux to be used as indicator to not commit, most likely to be secrets.
+\.* 
+
+
+

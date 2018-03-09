@@ -3,19 +3,16 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using static Microsoft.Azure.KeyVault.KeyVaultClient;
 
-namespace azure
+namespace Grumpydev.Net.Essentials.Azure
 {
     public class KeyVaultSecretManager : ICertificateProvider
     {
         
-        public IConfigurationProvider ConfigurationProvider { get; set; }
+        public IConfiguration Configuration { get; set; }
 
         public ICertificateForKeyVaultAuthentication CertificateForKeyVaultAuthentication { get; set; }
 
@@ -35,7 +32,7 @@ namespace azure
         {
             var certificate = this.CertificateForKeyVaultAuthentication.GetCertificateForAuthentication();
 
-            this.ConfigurationProvider.TryGet("key", out string applicationId);
+            var applicationId = this.Configuration.GetSection("appSettings")[ConfigurationKeys.AzureKeyVaultApplicationId];
 
             applicationId.ThrowIfNull($"Missing key in the configuration. The configuration should include a key '{ConfigurationKeys.AzureKeyVaultApplicationId}' containing the AAD application ID to authenticate with. See.."); //TODO: Provide link with help.
 
@@ -46,18 +43,23 @@ namespace azure
 
         private KeyVaultClient _keyVaultClient;
 
-        public KeyVaultSecretManager(IConfigurationProvider configurationProvider, ICertificateForKeyVaultAuthentication certificateForKeyVaultAuthentication)
+        public KeyVaultSecretManager(IConfiguration configuration, ICertificateForKeyVaultAuthentication certificateForKeyVaultAuthentication)
         {
-            configurationProvider.ThrowIfNull();
+            configuration.ThrowIfNull();
             certificateForKeyVaultAuthentication.ThrowIfNull();
 
-            this.ConfigurationProvider = configurationProvider;
+            this.Configuration = configuration;
             this.CertificateForKeyVaultAuthentication = certificateForKeyVaultAuthentication;
         }
 
         public X509Certificate2 GetCertificate(string certificateName)
         {
             throw new NotImplementedException();
+        }
+
+        public string GetSecret(string secretName)
+        {
+            return this.KeyVaultClient.GetSecretAsync(secretName).Result.Value;
         }
 
         internal static KeyVaultClient GetKeyVaultClient(X509Certificate2 certificate, string applicationId, HttpClient httpClient = null)

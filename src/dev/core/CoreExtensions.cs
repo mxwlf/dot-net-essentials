@@ -10,7 +10,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             if (@object == null)
             {
-                throw new Exception(message ?? "Variable expected to be not null");
+                throw new ArgumentNullException(message ?? "Variable expected to be not null");
             }
         }
     }

@@ -22,7 +22,19 @@ namespace azure_tests_integration
 
             // Assert
             secret.Should().NotBeNull(); // Get a previously saved secret.
+        }
 
+        [TestMethod]
+        public void GetCertificate()
+        {
+            // Arrange.
+            var keyVaultAccessInformation = new JsonFileKeyVaultAccessInformation(new LocalFileSystem());
+            var certficateStore = new FileCertificateSource(keyVaultAccessInformation);
+            var keyvault = new KeyVaultSecretManager(keyVaultAccessInformation, certficateStore);
+
+            var certificate = keyvault.GetCertificate("https://grumpydevinttestkeyvault.vault.azure.net/secrets/TestSelfSignedCert/");
+
+            certificate.Should().NotBeNull();
 
 
 

@@ -50,8 +50,12 @@ namespace Grumpydev.Net.Essentials.Azure
 
         public X509Certificate2 GetCertificate(string certificateName)
         {
-            throw new NotImplementedException();
+            var certificateText = this.GetSecret(certificateName);
+            var certBytes = Convert.FromBase64String(certificateText);
+            var certificate = new X509Certificate2(certBytes);
+            return certificate;
         }
+
 
         public string GetSecret(string secretName)
         {

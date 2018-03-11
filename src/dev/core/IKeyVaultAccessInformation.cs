@@ -13,5 +13,7 @@ namespace Grumpydev.Net.Essentials.Core
 
         //TODO: Convert to Securestring
         string LocalCertificatePassword { get; }
+        
+        string KeyVaultUrl { get; }
     }
 }

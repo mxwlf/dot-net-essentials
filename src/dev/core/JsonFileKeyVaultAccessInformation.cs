@@ -1,7 +1,4 @@
-﻿
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System.Security;
+﻿using Newtonsoft.Json;
 
 namespace Grumpydev.Net.Essentials.Core
 {
@@ -50,7 +47,21 @@ namespace Grumpydev.Net.Essentials.Core
             }
         }
 
-       
+        public string KeyVaultUrl
+        {
+            get
+            {
+                var url = this.KeyVaultAccessInformation?.KeyVaultUrl ?? this.LoadInformation().KeyVaultUrl;
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    url = url.TrimEnd('/');
+                }
+
+                return url;
+            }
+        }
+
         private class InternalKeyVaultAccessInformation : IKeyVaultAccessInformation
         {
             public string PrincipalApplicationId { get; set; }
@@ -58,6 +69,8 @@ namespace Grumpydev.Net.Essentials.Core
             public string LocalCertificateFile { get; set; }
             
             public string LocalCertificatePassword { get; set; }
+
+            public string KeyVaultUrl { get; set; }
         }
     }
 

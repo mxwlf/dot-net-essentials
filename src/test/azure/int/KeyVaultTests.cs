@@ -18,7 +18,7 @@ namespace azure_tests_integration
             var keyvault = new KeyVaultSecretManager(keyVaultAccessInformation, certficateStore);
 
             // Act.
-            var secret = keyvault.GetSecret("https://grumpydevinttestkeyvault.vault.azure.net/secrets/TestSecret/"); //TODO: Remove the long URL
+            var secret = keyvault.GetSecret("TestSecret"); //TODO: Remove the long URL
 
             // Assert
             secret.Should().NotBeNull(); // Get a previously saved secret.
@@ -32,7 +32,7 @@ namespace azure_tests_integration
             var certficateStore = new FileCertificateSource(keyVaultAccessInformation);
             var keyvault = new KeyVaultSecretManager(keyVaultAccessInformation, certficateStore);
 
-            var certificate = keyvault.GetCertificate("https://grumpydevinttestkeyvault.vault.azure.net/secrets/TestSelfSignedCert/");
+            var certificate = keyvault.GetCertificate("TestSelfSignedCert");
 
             certificate.Should().NotBeNull();
 

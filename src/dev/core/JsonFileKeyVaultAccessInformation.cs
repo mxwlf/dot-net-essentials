@@ -27,6 +27,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
+                // Todo: test for null or empty
                 return this.KeyVaultAccessInformation?.PrincipalApplicationId ?? this.LoadInformation().PrincipalApplicationId;
             }
         }
@@ -35,6 +36,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
+                // Todo: test for null or empty
                 return this.KeyVaultAccessInformation?.LocalCertificateFile ?? this.LoadInformation().LocalCertificateFile;
             }
         }
@@ -53,10 +55,9 @@ namespace Grumpydev.Net.Essentials.Core
             {
                 var url = this.KeyVaultAccessInformation?.KeyVaultUrl ?? this.LoadInformation().KeyVaultUrl;
 
-                if (!string.IsNullOrEmpty(url))
-                {
-                    url = url.TrimEnd('/');
-                }
+                url.ThrowIfNullEmptyOrWhiteSpace("The secret json configuration file should have the KeyVaultUrl property setup.");
+
+                url = url.TrimEnd('/');
 
                 return url;
             }

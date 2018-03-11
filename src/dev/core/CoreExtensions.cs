@@ -10,7 +10,15 @@ namespace Grumpydev.Net.Essentials.Core
         {
             if (@object == null)
             {
-                throw new ArgumentNullException(message ?? "Variable expected to be not null");
+                throw new Exception(message ?? "Variable expected to be not null");
+            }
+        }
+
+        public static void ThrowIfNullEmptyOrWhiteSpace(this string @string, string message = null)
+        {
+            if(@string.IsNullEmptyOrWhiteSpace())
+            {
+                throw new Exception(message ?? "The string is expected to be non null, nor expty or white space.");
             }
         }
     }

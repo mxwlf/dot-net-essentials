@@ -1,7 +1,4 @@
-﻿
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System.Security;
+﻿using Newtonsoft.Json;
 
 namespace Grumpydev.Net.Essentials.Core
 {
@@ -30,6 +27,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
+                // Todo: test for null or empty
                 return this.KeyVaultAccessInformation?.PrincipalApplicationId ?? this.LoadInformation().PrincipalApplicationId;
             }
         }
@@ -38,6 +36,7 @@ namespace Grumpydev.Net.Essentials.Core
         {
             get
             {
+                // Todo: test for null or empty
                 return this.KeyVaultAccessInformation?.LocalCertificateFile ?? this.LoadInformation().LocalCertificateFile;
             }
         }
@@ -50,7 +49,20 @@ namespace Grumpydev.Net.Essentials.Core
             }
         }
 
-       
+        public string KeyVaultUrl
+        {
+            get
+            {
+                var url = this.KeyVaultAccessInformation?.KeyVaultUrl ?? this.LoadInformation().KeyVaultUrl;
+
+                url.ThrowIfNullEmptyOrWhiteSpace("The secret json configuration file should have the KeyVaultUrl property setup.");
+
+                url = url.TrimEnd('/');
+
+                return url;
+            }
+        }
+
         private class InternalKeyVaultAccessInformation : IKeyVaultAccessInformation
         {
             public string PrincipalApplicationId { get; set; }
@@ -58,6 +70,8 @@ namespace Grumpydev.Net.Essentials.Core
             public string LocalCertificateFile { get; set; }
             
             public string LocalCertificatePassword { get; set; }
+
+            public string KeyVaultUrl { get; set; }
         }
     }
 

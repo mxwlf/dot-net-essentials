@@ -50,12 +50,23 @@ namespace Grumpydev.Net.Essentials.Azure
 
         public X509Certificate2 GetCertificate(string certificateName)
         {
-            throw new NotImplementedException();
+            var certificateText = this.GetSecret(certificateName);
+            var certBytes = Convert.FromBase64String(certificateText);
+            var certificate = new X509Certificate2(certBytes);
+            return certificate;
         }
+
 
         public string GetSecret(string secretName)
         {
-            return this.KeyVaultClient.GetSecretAsync(secretName).Result.Value;
+            var secretUrl = BuildSecretUrl(secretName, this.KeyVaultAccessInformation.KeyVaultUrl);
+
+            return this.KeyVaultClient.GetSecretAsync(secretUrl).Result.Value;
+        }
+
+        internal static string BuildSecretUrl(string secretName, string keyVaultUrl)
+        {
+            return $"{keyVaultUrl}/secrets/{secretName}/";
         }
 
         internal static KeyVaultClient GetKeyVaultClient(X509Certificate2 certificate, string applicationId, HttpClient httpClient = null)

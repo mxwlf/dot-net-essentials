@@ -60,7 +60,7 @@ namespace Grumpydev.Net.Essentials.Core.Tests
             Action action = () => { secureString.ConvertToUnsecureString(); };
 
             // Assert.
-            action.Should().Throw<ArgumentNullException>("secureString");
+            action.Should().Throw<Exception>("secureString");
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace Grumpydev.Net.Essentials.Core.Tests
             Action action = () => { unsecureString.ConvertToSecureString(); };
 
             // Assert.
-            action.Should().Throw<ArgumentNullException>("unsecureString");
+            action.Should().Throw<Exception>("unsecureString");
         }
     }
 }

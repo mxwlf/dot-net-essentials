@@ -8,20 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="NSubstitute" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\dev\azure\azure.csproj" />
     <ProjectReference Include="..\..\..\dev\core\core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update=".KeyVaultAccessInformation.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\..\dev\web\web.csproj" />
   </ItemGroup>
 
 </Project>

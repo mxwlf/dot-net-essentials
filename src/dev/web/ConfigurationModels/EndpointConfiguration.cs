@@ -17,8 +17,7 @@ namespace Grumpydev.Net.Essentials.Web.ConfigurationModels
                     "Https":{
                         "Host": "www.example.org",
                         "Port": 443,
-                        "Scheme": "https",
-                        "FilePath": "/path/to/certificate"
+                        "Scheme": "https"
                     }
                 }
 
@@ -30,10 +29,8 @@ namespace Grumpydev.Net.Essentials.Web.ConfigurationModels
     {
         public string Host { get; set; }
 
-        public int? Port { get; set; }
+        public int Port { get; set; }
 
         public string Scheme { get; set; }
-        
-        public string FilePath { get; set; }
     }
 }

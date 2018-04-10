@@ -1,14 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Grumpydev.Net.Essentials.Web</AssemblyName>
+    <Description>Net Core development essentials. Collection of reusable code for my .net core projects. This package contains the web components.</Description>
+    <PackageIconUrl>https://avatars1.githubusercontent.com/u/2484521</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Grumpydev.Net.Essentials.Core" Version="0.0.1-alpha" />
     <PackageReference Include="Microsoft.AspNetCore.AzureAppServicesIntegration" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="2.0.2" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\core\core.csproj" />
-  </ItemGroup>
+  <Import Project="../../solution items/GlobalAssemblyInfo.props"></Import>
 </Project>

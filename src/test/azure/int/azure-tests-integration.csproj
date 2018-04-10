@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\dev\azure\azure.csproj" />
-    <ProjectReference Include="..\..\..\dev\core\core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

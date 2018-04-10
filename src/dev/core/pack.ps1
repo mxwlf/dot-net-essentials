@@ -1,0 +1,1 @@
+dotnet pack --configuration Debug --include-source --include-symbols --output nupkgs  --version-suffix alpha

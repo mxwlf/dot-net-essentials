@@ -1,4 +1,4 @@
 # Core abstractions and classes
 
 ## Namespace
-Please keep this namespace Grumpydev-net.Essentials.Core
+Please keep this namespace Grumpydev.Net.Essentials.Core

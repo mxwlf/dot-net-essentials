@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\dev\core\core.csproj" />
     <ProjectReference Include="..\..\..\dev\web\web.csproj" />
   </ItemGroup>
 
